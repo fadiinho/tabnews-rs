@@ -36,7 +36,7 @@ impl PostsApi {
 
         let response = self
             .tabnews_client
-            .get("/contents".to_owned(), Some(&_params))
+            .get_with_params("/contents".to_owned(), Some(&_params))
             .await
             .unwrap();
 
@@ -54,7 +54,11 @@ impl PostsApi {
 
         let uri = format!("/contents/{}", username);
 
-        let response = self.tabnews_client.get(uri, Some(&_params)).await.unwrap();
+        let response = self
+            .tabnews_client
+            .get_with_params(uri, Some(&_params))
+            .await
+            .unwrap();
 
         let json_response: Vec<Content> = response.json().await.unwrap();
 
@@ -69,7 +73,11 @@ impl PostsApi {
         let _params = ContentParams::default();
         let uri = format!("/contents/{}/{}", username, slug);
 
-        let response = self.tabnews_client.get(uri, Some(&_params)).await.unwrap();
+        let response = self
+            .tabnews_client
+            .get_with_params(uri, Some(&_params))
+            .await
+            .unwrap();
 
         let json_response = response.json().await.unwrap();
 
@@ -84,7 +92,11 @@ impl PostsApi {
         let _params = ContentParams::default();
         let uri = format!("/contents/{}/{}/children", username, slug);
 
-        let response = self.tabnews_client.get(uri, Some(&_params)).await.unwrap();
+        let response = self
+            .tabnews_client
+            .get_with_params(uri, Some(&_params))
+            .await
+            .unwrap();
 
         let json_response = response.json().await.unwrap();
 
@@ -99,7 +111,11 @@ impl PostsApi {
         let _params = ContentParams::default();
         let uri = format!("/contents/{}/{}/thumbnail", username, slug);
 
-        let response = self.tabnews_client.get(uri, Some(&_params)).await.unwrap();
+        let response = self
+            .tabnews_client
+            .get_with_params(uri, Some(&_params))
+            .await
+            .unwrap();
 
         Ok(response)
     }

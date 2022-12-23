@@ -32,7 +32,7 @@ impl TabnewsApi {
         }
     }
 
-    pub async fn get<T: Serialize>(
+    pub async fn get_with_params<T: Serialize>(
         &self,
         path: String,
         params: Option<&T>,
