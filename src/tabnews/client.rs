@@ -1,5 +1,5 @@
 use reqwest::{
-    header::{HeaderMap, SET_COOKIE},
+    header::{HeaderMap, IntoHeaderName, SET_COOKIE},
     Client, StatusCode,
 };
 use serde::Serialize;
@@ -86,7 +86,10 @@ impl TabnewsApi {
         Ok(response)
     }
 
-    pub async fn add_header(&mut self, key: String, value: String) {
-        self.headers.insert(SET_COOKIE, value.parse().unwrap());
+    pub fn add_header<K>(&mut self, key: K, value: String)
+    where
+        K: IntoHeaderName,
+    {
+        self.headers.insert(key, value.parse().unwrap());
     }
 }
