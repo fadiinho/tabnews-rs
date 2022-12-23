@@ -29,6 +29,33 @@ impl PostsApi {
         Some(params)
     }
 
+    /// Returns the posts of the homepage
+    ///
+    /// # Examples
+    ///
+    /// Example without parameters:
+    ///
+    /// ```
+    /// let posts_api = PostsApi::new();
+    /// let homepage_posts: Vec<Content> = posts_api.get_homepage_posts(None).await.unwrap();
+    ///
+    /// println!("{:?}", homepage_posts)
+    /// ```
+    /// Example with parameters:
+    ///
+    /// ```
+    /// let posts_api = PostsApi::new();
+    ///
+    /// let parameters = ContentParams {
+    ///     page: Some(1),
+    ///     per_page: Some(10),
+    ///     strategy: Some("old".to_owned())
+    /// }
+    ///
+    /// let homepage_posts: Vec<Content> = posts_api.get_homepage_posts(Some(parameters)).await.unwrap();
+    ///
+    /// println!("{:?}", homepage_posts)
+    /// ```
     pub async fn get_homepage_posts(
         &self,
         params: Option<ContentParams>,
@@ -46,6 +73,33 @@ impl PostsApi {
         Ok(json_response)
     }
 
+    /// Returns the posts of a specific user
+    ///
+    /// # Examples
+    ///
+    /// Example without parameters:
+    ///
+    /// ```
+    /// let posts_api = PostsApi::new();
+    /// let fadiinho_posts: Vec<Content> = posts_api.get_posts_by_user("fadiinho", None).await.unwrap();
+    ///
+    /// println!("{:?}", fadiinho_posts)
+    /// ```
+    /// Example with parameters:
+    ///
+    /// ```
+    /// let posts_api = PostsApi::new();
+    ///
+    /// let parameters = ContentParams {
+    ///     page: Some(1),
+    ///     per_page: Some(10),
+    ///     strategy: Some("old".to_owned())
+    /// }
+    ///
+    /// let fadiinho_posts: Vec<Content> = posts_api.get_posts_by_user("fadiinho", Some(parameters)).await.unwrap();
+    ///
+    /// println!("{:?}", fadiinho_posts)
+    /// ```
     pub async fn get_posts_by_user(
         &self,
         username: &str,
@@ -66,6 +120,19 @@ impl PostsApi {
         Ok(json_response)
     }
 
+    /// Get the details of a specific post
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let posts_api = PostsApi::new();
+    /// let post: Content = posts_api.get_post_details(
+    ///     "GabrielSozinho",
+    ///     "documentacao-da-api-do-tabnews"
+    /// ).await.unwrap();
+    ///
+    /// println!("{:?}", post)
+    /// ```
     pub async fn get_post_details(
         &self,
         username: &str,
@@ -85,6 +152,19 @@ impl PostsApi {
         Ok(json_response)
     }
 
+    /// Get the comments of a specific post
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let posts_api = PostsApi::new();
+    /// let post: Vec<Content> = posts_api.get_post_comments(
+    ///     "GabrielSozinho",
+    ///     "documentacao-da-api-do-tabnews"
+    /// ).await.unwrap();
+    ///
+    /// println!("{:?}", post)
+    /// ```
     pub async fn get_post_comments(
         &self,
         username: &str,
@@ -104,6 +184,20 @@ impl PostsApi {
         Ok(json_response)
     }
 
+    /// Get the thumbnail of a specific post
+    /// It returns a reqwest `Response`, that can be used to save the file.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let posts_api = PostsApi::new();
+    /// let response: Response = posts_api.get_post_thumbnail(
+    ///     "GabrielSozinho",
+    ///     "documentacao-da-api-do-tabnews"
+    /// ).await.unwrap();
+    ///
+    /// println!("{:?}", response)
+    /// ```
     pub async fn get_post_thumbnail(
         &self,
         username: &str,
