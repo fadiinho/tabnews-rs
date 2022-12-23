@@ -53,4 +53,22 @@ impl TabnewsApi {
 
         Ok(response)
     }
+
+    pub async fn get(&self, path: String) -> Result<reqwest::Response, TabnewsError> {
+        let url = format!("{}/{}", self.host, path);
+
+        let request = self.client.get(url.as_str());
+
+        let response = request.send().await.unwrap();
+
+        match response.status() {
+            StatusCode::OK => {}
+            _ => {
+                let json_response: TabnewsError = response.json().await.unwrap();
+                return Err(json_response);
+            }
+        }
+
+        Ok(response)
+    }
 }
