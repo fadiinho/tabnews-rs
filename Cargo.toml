@@ -1,0 +1,16 @@
+[package]
+name = "tabnews_rs"
+version = "0.1.0"
+authors = ["Fadiinho"]
+description = "Wrapper for the Tabnews API"
+homepage = "https://github.com/fadiinho/tabnews_rs"
+repository = "https://github.com/fadiinho/tabnews_rs"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0.151", features = ["derive"]}
+serde_json = "1.0.91"
+tokio = { version = "1", features = ["full"] }
