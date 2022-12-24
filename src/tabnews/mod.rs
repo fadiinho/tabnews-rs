@@ -1,3 +1,4 @@
 pub mod analytics;
-mod client;
+pub mod auth;
+pub mod http_client;
 pub mod posts;

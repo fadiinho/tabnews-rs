@@ -2,20 +2,28 @@ use crate::models;
 
 use crate::models::content::ContentParams;
 use crate::models::error::TabnewsError;
-use crate::tabnews::client::TabnewsApi;
+use crate::tabnews::http_client::HttpClient;
 
 use models::content::Content;
 use reqwest::Response;
 
 pub struct PostsApi {
-    tabnews_client: TabnewsApi,
+    tabnews_client: HttpClient,
+}
+
+impl Default for PostsApi {
+    fn default() -> Self {
+        let tabnews_client = HttpClient::default();
+
+        PostsApi::new(tabnews_client)
+    }
 }
 
 impl PostsApi {
-    pub fn new() -> Self {
-        let tabnews_client = TabnewsApi::default();
-
-        PostsApi { tabnews_client }
+    pub fn new(client: HttpClient) -> Self {
+        PostsApi {
+            tabnews_client: client,
+        }
     }
 
     fn build_params(&self, params: Option<ContentParams>) -> Option<ContentParams> {
@@ -41,7 +49,7 @@ impl PostsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let posts_api = PostsApi::new();
+    ///     let posts_api = PostsApi::default();
     ///
     ///     let homepage_posts: Vec<Content> = posts_api.get_homepage_posts(None).await.unwrap();
     ///
@@ -56,7 +64,7 @@ impl PostsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let posts_api = PostsApi::new();
+    ///     let posts_api = PostsApi::default();
     ///
     ///     let parameters = ContentParams {
     ///         page: Some(1),
@@ -97,7 +105,7 @@ impl PostsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let posts_api = PostsApi::new();
+    ///     let posts_api = PostsApi::default();
     ///
     ///     let fadiinho_posts: Vec<Content> = posts_api.get_posts_by_user("fadiinho", None).await.unwrap();
     ///
@@ -113,7 +121,7 @@ impl PostsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let posts_api = PostsApi::new();
+    ///     let posts_api = PostsApi::default();
     ///
     ///     let parameters = ContentParams {
     ///         page: Some(1),
@@ -156,7 +164,7 @@ impl PostsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let posts_api = PostsApi::new();
+    ///     let posts_api = PostsApi::default();
     ///
     ///     let post: Content = posts_api.get_post_details(
     ///         "GabrielSozinho",
@@ -195,7 +203,7 @@ impl PostsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let posts_api = PostsApi::new();
+    ///     let posts_api = PostsApi::default();
     ///     let post: Vec<Content> = posts_api.get_post_comments(
     ///         "GabrielSozinho",
     ///         "documentacao-da-api-do-tabnews"
@@ -235,7 +243,7 @@ impl PostsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let posts_api = PostsApi::new();
+    ///     let posts_api = PostsApi::default();
     ///     let response: Response = posts_api.get_post_thumbnail(
     ///         "GabrielSozinho",
     ///         "documentacao-da-api-do-tabnews"

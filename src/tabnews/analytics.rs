@@ -1,16 +1,24 @@
 use crate::models::analytics::{CommentsPublishedStatus, PostsPublishedStatus, UsersCreatedStatus};
 
-use super::client::TabnewsApi;
+use super::http_client::HttpClient;
 
 pub struct AnalyticsApi {
-    tabnews_client: TabnewsApi,
+    http_client: HttpClient,
+}
+
+impl Default for AnalyticsApi {
+    fn default() -> Self {
+        let http_client = HttpClient::default();
+
+        AnalyticsApi::new(http_client)
+    }
 }
 
 impl AnalyticsApi {
-    pub fn new() -> Self {
-        let tabnews_client = TabnewsApi::default();
-
-        AnalyticsApi { tabnews_client }
+    pub fn new(client: HttpClient) -> Self {
+        AnalyticsApi {
+            http_client: client,
+        }
     }
 
     /// Get how many users have been created per day
@@ -23,7 +31,7 @@ impl AnalyticsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let analytics_api = AnalyticsApi::new();
+    ///     let analytics_api = AnalyticsApi::default();
     ///     let response: Vec<UsersCreatedStatus> = analytics_api
     ///         .get_users_created().await;
     ///
@@ -32,7 +40,7 @@ impl AnalyticsApi {
     /// ```
     pub async fn get_users_created(&self) -> Vec<UsersCreatedStatus> {
         let response = self
-            .tabnews_client
+            .http_client
             .get("/analytics/users-created".to_owned())
             .await
             .unwrap();
@@ -52,7 +60,7 @@ impl AnalyticsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let analytics_api = AnalyticsApi::new();
+    ///     let analytics_api = AnalyticsApi::default();
     ///     let response: Vec<PostsPublishedStatus> = analytics_api
     ///         .get_posts_published().await;
     ///
@@ -61,7 +69,7 @@ impl AnalyticsApi {
     /// ```
     pub async fn get_posts_published(&self) -> Vec<PostsPublishedStatus> {
         let response = self
-            .tabnews_client
+            .http_client
             .get("/analytics/root-content-published".to_owned())
             .await
             .unwrap();
@@ -81,7 +89,7 @@ impl AnalyticsApi {
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let analytics_api = AnalyticsApi::new();
+    ///     let analytics_api = AnalyticsApi::default();
     ///     let response: Vec<CommentsPublishedStatus> = analytics_api
     ///         .get_comments_published().await;
     ///
@@ -90,7 +98,7 @@ impl AnalyticsApi {
     /// ```
     pub async fn get_comments_published(&self) -> Vec<CommentsPublishedStatus> {
         let response = self
-            .tabnews_client
+            .http_client
             .get("/analytics/child-content-published".to_owned())
             .await
             .unwrap();

@@ -1,5 +1,7 @@
+use std::collections::HashMap;
+
 use reqwest::{
-    header::{HeaderMap, IntoHeaderName, SET_COOKIE},
+    header::{HeaderMap, HeaderName, HeaderValue, IntoHeaderName},
     Client, StatusCode,
 };
 use serde::Serialize;
@@ -7,19 +9,20 @@ use serde::Serialize;
 use crate::models::error::TabnewsError;
 pub const BASE_URL: &'static str = "https://www.tabnews.com.br/api/v1";
 
-pub struct TabnewsApi {
+#[derive(Clone)]
+pub struct HttpClient {
     host: &'static str,
     client: Client,
     headers: HeaderMap,
 }
 
-impl Default for TabnewsApi {
+impl Default for HttpClient {
     fn default() -> Self {
-        TabnewsApi::new(Some(BASE_URL))
+        HttpClient::new(Some(BASE_URL))
     }
 }
 
-impl TabnewsApi {
+impl HttpClient {
     /// Creates a new [`TabnewsApi`].
     /// `host` can be passed as argument to change the default host
     pub fn new(host: Option<&'static str>) -> Self {
@@ -86,10 +89,37 @@ impl TabnewsApi {
         Ok(response)
     }
 
-    pub fn add_header<K>(&mut self, key: K, value: String)
+    pub async fn post(
+        &self,
+        path: String,
+        body: HashMap<String, String>,
+    ) -> Result<reqwest::Response, TabnewsError> {
+        let url = format!("{}/{}", self.host, path);
+
+        let request = self
+            .client
+            .post(url.as_str())
+            .json(&body)
+            .headers(self.headers.to_owned());
+
+        let response = request.send().await.unwrap();
+
+        Ok(response)
+    }
+
+    pub fn add_header<K>(&mut self, key: K, value: HeaderValue)
     where
         K: IntoHeaderName,
     {
-        self.headers.insert(key, value.parse().unwrap());
+        self.headers.insert(key, value);
+    }
+
+    pub fn add_multiple_headers(&mut self, headers: HashMap<String, String>) {
+        for (k, v) in headers.iter() {
+            self.add_header(
+                HeaderName::try_from(k).unwrap(),
+                HeaderValue::try_from(v).unwrap(),
+            );
+        }
     }
 }

@@ -5,7 +5,7 @@ mod posts_tests {
 
     #[tokio::test]
     async fn get_homepage_posts() {
-        let posts_api = PostsApi::new();
+        let posts_api = PostsApi::default();
 
         let response = posts_api.get_homepage_posts(None).await.unwrap();
 
@@ -20,7 +20,7 @@ mod posts_tests {
             page: Some(1),
         };
 
-        let posts_api = PostsApi::new();
+        let posts_api = PostsApi::default();
 
         let response = posts_api.get_homepage_posts(Some(params)).await.unwrap();
 
@@ -29,7 +29,7 @@ mod posts_tests {
 
     #[tokio::test]
     async fn get_user_posts() {
-        let posts_api = PostsApi::new();
+        let posts_api = PostsApi::default();
 
         let response = posts_api.get_posts_by_user("fadiinho", None).await.unwrap();
 
@@ -39,7 +39,7 @@ mod posts_tests {
     #[tokio::test]
     #[should_panic]
     async fn get_non_existent_user_posts() {
-        let posts_api = PostsApi::new();
+        let posts_api = PostsApi::default();
 
         let response = posts_api
             .get_posts_by_user("non-existent-user", None)
@@ -51,7 +51,7 @@ mod posts_tests {
 
     #[tokio::test]
     async fn get_post_details() {
-        let posts_api = PostsApi::new();
+        let posts_api = PostsApi::default();
         let slug = "documentacao-da-api-do-tabnews";
 
         let response = posts_api
@@ -65,7 +65,7 @@ mod posts_tests {
     #[tokio::test]
     #[should_panic]
     async fn get_non_existent_post_details() {
-        let posts_api = PostsApi::new();
+        let posts_api = PostsApi::default();
         let slug = "arroz";
 
         let response = posts_api.get_post_details("feijao", slug).await.unwrap();
@@ -75,7 +75,7 @@ mod posts_tests {
 
     #[tokio::test]
     async fn get_post_comments() {
-        let posts_api = PostsApi::new();
+        let posts_api = PostsApi::default();
 
         let response = posts_api
             .get_post_comments("GabrielSozinho", "documentacao-da-api-do-tabnews")
@@ -87,7 +87,7 @@ mod posts_tests {
 
     #[tokio::test]
     async fn get_post_thumbnail() -> Result<(), String> {
-        let posts_api = PostsApi::new();
+        let posts_api = PostsApi::default();
 
         let response = posts_api
             .get_post_thumbnail("GabrielSozinho", "documentacao-da-api-do-tabnews")

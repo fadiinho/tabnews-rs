@@ -4,7 +4,7 @@ mod analytics_tests {
 
     #[tokio::test]
     async fn get_users_created_analytics() {
-        let posts_api = AnalyticsApi::new();
+        let posts_api = AnalyticsApi::default();
 
         let response = posts_api.get_users_created().await;
 
@@ -13,7 +13,7 @@ mod analytics_tests {
 
     #[tokio::test]
     async fn get_posts_published_analytics() {
-        let posts_api = AnalyticsApi::new();
+        let posts_api = AnalyticsApi::default();
 
         let response = posts_api.get_posts_published().await;
 
@@ -22,7 +22,7 @@ mod analytics_tests {
 
     #[tokio::test]
     async fn get_comments_published_analytics() {
-        let posts_api = AnalyticsApi::new();
+        let posts_api = AnalyticsApi::default();
 
         let response = posts_api.get_comments_published().await;
 
