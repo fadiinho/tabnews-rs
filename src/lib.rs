@@ -8,11 +8,13 @@ use std::collections::HashMap;
 
 use tabnews::http_client::HttpClient;
 
+use tabnews::user::UserApi;
 use tabnews::{analytics::AnalyticsApi, posts::PostsApi};
 
 pub struct TabnewsClient {
     pub posts_api: PostsApi,
     pub analytics_api: AnalyticsApi,
+    pub user_api: UserApi,
 }
 
 impl Default for TabnewsClient {
@@ -22,6 +24,7 @@ impl Default for TabnewsClient {
         TabnewsClient {
             posts_api: PostsApi::new(client.clone()),
             analytics_api: AnalyticsApi::new(client.clone()),
+            user_api: UserApi::new(client.clone()),
         }
     }
 }
@@ -35,6 +38,7 @@ impl TabnewsClient {
         TabnewsClient {
             posts_api: PostsApi::new(client.clone()),
             analytics_api: AnalyticsApi::new(client.clone()),
+            user_api: UserApi::new(client.clone()),
         }
     }
 }
