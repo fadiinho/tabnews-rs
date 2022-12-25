@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use reqwest::{
-    header::{HeaderMap, HeaderName, HeaderValue, IntoHeaderName},
+    header::{HeaderMap, HeaderName, HeaderValue, IntoHeaderName, CONTENT_TYPE},
     Client, StatusCode,
 };
 use serde::Serialize;
@@ -33,7 +33,12 @@ impl HttpClient {
 
         let client = Client::new();
 
-        let headers = HeaderMap::new();
+        let mut headers = HeaderMap::new();
+
+        headers.insert(
+            CONTENT_TYPE,
+            HeaderValue::from_str("application/json").unwrap(),
+        );
 
         Self {
             host: _host,
@@ -89,16 +94,34 @@ impl HttpClient {
         Ok(response)
     }
 
-    pub async fn post(
-        &self,
-        path: String,
-        body: HashMap<String, String>,
-    ) -> Result<reqwest::Response, TabnewsError> {
+    pub async fn post<T>(&self, path: String, body: T) -> Result<reqwest::Response, TabnewsError>
+    where
+        T: Serialize,
+    {
         let url = format!("{}/{}", self.host, path);
 
         let request = self
             .client
             .post(url.as_str())
+            .json(&body)
+            .headers(self.headers.to_owned());
+
+        let response = request.send().await.unwrap();
+
+        Ok(response)
+    }
+
+    pub async fn patch<T>(&self, path: String, body: T) -> Result<reqwest::Response, TabnewsError>
+    where
+        T: Serialize,
+    {
+        let url = format!("{}/{}", self.host, path);
+
+        println!("#http_client#patch#url {}", url);
+
+        let request = self
+            .client
+            .patch(url.as_str())
             .json(&body)
             .headers(self.headers.to_owned());
 
@@ -121,5 +144,9 @@ impl HttpClient {
                 HeaderValue::try_from(v).unwrap(),
             );
         }
+    }
+
+    pub fn get_header(&self, header_key: &str) -> Result<&str, reqwest::header::ToStrError> {
+        self.headers.get(header_key).unwrap().to_str()
     }
 }
