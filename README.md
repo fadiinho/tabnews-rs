@@ -1,4 +1,7 @@
-# Tabnews rs
+<div align="center">
+<img src="https://user-images.githubusercontent.com/94945604/209778095-4f7be4fa-df2f-4e4c-8fa1-043a5473cc8e.png" width="150px" alt="Tabnews Rust Version" />
+<h1>tabnews-rs</h1>
+</div>
 
 Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
 
