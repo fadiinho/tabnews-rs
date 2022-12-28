@@ -1,11 +1,14 @@
 [package]
-name = "tabnews_rs"
+name = "tabnews"
 version = "0.1.0"
 authors = ["Fadiinho"]
+keywords = ["tabnews", "api", "wrapper"]
 description = "Wrapper for the Tabnews API"
 homepage = "https://github.com/fadiinho/tabnews_rs"
 repository = "https://github.com/fadiinho/tabnews_rs"
 edition = "2021"
+license = "GPL-3.0-or-later"
+categories = ["api-bindings"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
