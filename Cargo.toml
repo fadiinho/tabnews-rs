@@ -7,7 +7,7 @@ description = "Wrapper for the Tabnews API"
 homepage = "https://github.com/fadiinho/tabnews_rs"
 repository = "https://github.com/fadiinho/tabnews_rs"
 edition = "2021"
-license = "GPL-3.0-or-later"
+license-file = "LICENSE"
 categories = ["api-bindings"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
