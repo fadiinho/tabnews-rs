@@ -26,8 +26,8 @@ impl AnalyticsApi {
     /// # Examples
     ///
     /// ```
-    /// use tabnews_rs::tabnews::analytics::AnalyticsApi;
-    /// use tabnews_rs::models::analytics::UsersCreatedStatus;
+    /// use tabnews::internal::analytics::AnalyticsApi;
+    /// use tabnews::models::analytics::UsersCreatedStatus;
     ///
     /// #[tokio::main]
     /// async fn main() {
@@ -55,8 +55,8 @@ impl AnalyticsApi {
     /// # Examples
     ///
     /// ```
-    /// use tabnews_rs::tabnews::analytics::AnalyticsApi;
-    /// use tabnews_rs::models::analytics::PostsPublishedStatus;
+    /// use tabnews::internal::analytics::AnalyticsApi;
+    /// use tabnews::models::analytics::PostsPublishedStatus;
     ///
     /// #[tokio::main]
     /// async fn main() {
@@ -84,8 +84,8 @@ impl AnalyticsApi {
     /// # Examples
     ///
     /// ```
-    /// use tabnews_rs::tabnews::analytics::AnalyticsApi;
-    /// use tabnews_rs::models::analytics::CommentsPublishedStatus;
+    /// use tabnews::internal::analytics::AnalyticsApi;
+    /// use tabnews::models::analytics::CommentsPublishedStatus;
     ///
     /// #[tokio::main]
     /// async fn main() {

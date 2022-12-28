@@ -28,7 +28,7 @@ impl UserApi {
     /// ```no_run
     /// use std::collections::HashMap;
     ///
-    /// use tabnews_rs::TabnewsClient;
+    /// use tabnews::TabnewsClient;
     ///
     /// #[tokio::main]
     /// async fn main() {

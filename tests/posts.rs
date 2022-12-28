@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod posts_tests {
-    use tabnews_rs::models::content::ContentParams;
-    use tabnews_rs::tabnews::posts::PostsApi;
+    use tabnews::internal::posts::PostsApi;
+    use tabnews::models::content::ContentParams;
 
     #[tokio::test]
     async fn get_homepage_posts() {

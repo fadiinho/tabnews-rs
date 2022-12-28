@@ -1,20 +1,22 @@
 extern crate reqwest;
 extern crate serde;
 
+pub mod internal;
 pub mod models;
-pub mod tabnews;
 
 use std::collections::HashMap;
 
-use tabnews::http_client::HttpClient;
-
-use tabnews::user::UserApi;
-use tabnews::{analytics::AnalyticsApi, posts::PostsApi};
+use internal::analytics::AnalyticsApi;
+use internal::http_client::HttpClient;
+use internal::posts::PostsApi;
+use internal::user::UserApi;
+use internal::users::UsersApi;
 
 pub struct TabnewsClient {
     pub posts_api: PostsApi,
     pub analytics_api: AnalyticsApi,
     pub user_api: UserApi,
+    pub users_api: UsersApi,
 }
 
 impl Default for TabnewsClient {
@@ -25,6 +27,7 @@ impl Default for TabnewsClient {
             posts_api: PostsApi::new(client.clone()),
             analytics_api: AnalyticsApi::new(client.clone()),
             user_api: UserApi::new(client.clone()),
+            users_api: UsersApi::new(client.clone()),
         }
     }
 }
@@ -39,6 +42,7 @@ impl TabnewsClient {
             posts_api: PostsApi::new(client.clone()),
             analytics_api: AnalyticsApi::new(client.clone()),
             user_api: UserApi::new(client.clone()),
+            users_api: UsersApi::new(client.clone()),
         }
     }
 }

@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod analytics_tests {
-    use tabnews_rs::tabnews::analytics::AnalyticsApi;
+    use tabnews::internal::analytics::AnalyticsApi;
 
     #[tokio::test]
     async fn get_users_created_analytics() {

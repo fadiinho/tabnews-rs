@@ -25,9 +25,12 @@ pub struct UserSession {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct EditProfilePayload {
-    pub username: Option<String>,
-    pub email: Option<String>,
-    pub password: Option<String>,
+    #[serde(rename = "username")]
+    pub new_username: Option<String>,
+    #[serde(rename = "email")]
+    pub new_email: Option<String>,
+    #[serde(rename = "password")]
+    pub new_password: Option<String>,
     pub notifications: Option<bool>,
 }
 //

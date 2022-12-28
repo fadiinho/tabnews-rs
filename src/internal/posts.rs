@@ -1,11 +1,10 @@
-use crate::models;
+use reqwest::Response;
 
+use super::http_client::HttpClient;
+
+use crate::models::content::Content;
 use crate::models::content::ContentParams;
 use crate::models::error::TabnewsError;
-use crate::tabnews::http_client::HttpClient;
-
-use models::content::Content;
-use reqwest::Response;
 
 pub struct PostsApi {
     tabnews_client: HttpClient,
@@ -44,8 +43,8 @@ impl PostsApi {
     /// Example without parameters:
     ///
     /// ```
-    /// use tabnews_rs::tabnews::posts::PostsApi;
-    /// use tabnews_rs::models::content::{Content, ContentParams};
+    /// use tabnews::internal::posts::PostsApi;
+    /// use tabnews::models::content::{Content, ContentParams};
     ///
     /// #[tokio::main]
     /// async fn main() {
@@ -59,8 +58,8 @@ impl PostsApi {
     /// Example with parameters:
     ///
     /// ```
-    /// use tabnews_rs::tabnews::posts::PostsApi;
-    /// use tabnews_rs::models::content::{Content, ContentParams};
+    /// use tabnews::internal::posts::PostsApi;
+    /// use tabnews::models::content::{Content, ContentParams};
     ///
     /// #[tokio::main]
     /// async fn main() {
@@ -100,8 +99,8 @@ impl PostsApi {
     ///
     /// Example without parameters:
     /// ```
-    /// use tabnews_rs::tabnews::posts::PostsApi;
-    /// use tabnews_rs::models::content::{Content, ContentParams};
+    /// use tabnews::internal::posts::PostsApi;
+    /// use tabnews::models::content::{Content, ContentParams};
     ///
     /// #[tokio::main]
     /// async fn main() {
@@ -115,8 +114,8 @@ impl PostsApi {
     /// Example with parameters:
     ///
     /// ```
-    /// use tabnews_rs::tabnews::posts::PostsApi;
-    /// use tabnews_rs::models::content::{Content, ContentParams};
+    /// use tabnews::internal::posts::PostsApi;
+    /// use tabnews::models::content::{Content, ContentParams};
     ///
     ///
     /// #[tokio::main]
@@ -159,8 +158,8 @@ impl PostsApi {
     /// # Examples
     ///
     /// ```
-    /// use tabnews_rs::tabnews::posts::PostsApi;
-    /// use tabnews_rs::models::content::{Content, ContentParams};
+    /// use tabnews::internal::posts::PostsApi;
+    /// use tabnews::models::content::{Content, ContentParams};
     ///
     /// #[tokio::main]
     /// async fn main() {
@@ -198,8 +197,8 @@ impl PostsApi {
     /// # Examples
     ///
     /// ```
-    /// use tabnews_rs::tabnews::posts::PostsApi;
-    /// use tabnews_rs::models::content::{Content, ContentParams};
+    /// use tabnews::internal::posts::PostsApi;
+    /// use tabnews::models::content::{Content, ContentParams};
     ///
     /// #[tokio::main]
     /// async fn main() {
@@ -238,8 +237,8 @@ impl PostsApi {
     ///
     /// ```
     /// use reqwest::Response;
-    /// use tabnews_rs::tabnews::posts::PostsApi;
-    /// use tabnews_rs::models::content::{Content, ContentParams};
+    /// use tabnews::internal::posts::PostsApi;
+    /// use tabnews::models::content::{Content, ContentParams};
     ///
     /// #[tokio::main]
     /// async fn main() {
@@ -267,5 +266,29 @@ impl PostsApi {
             .unwrap();
 
         Ok(response)
+    }
+
+    pub async fn get_post_parent() {
+        todo!("Not implemented!");
+    }
+
+    pub async fn get_post_root() {
+        todo!("Not implemented!");
+    }
+
+    pub async fn get_post_tabcoins() {
+        todo!("Not implemented!");
+    }
+
+    async fn _tab_coin_operation() {
+        todo!("Not implemented!");
+    }
+
+    pub async fn downvote() {
+        todo!("Not implemented!");
+    }
+
+    pub async fn upvote() {
+        todo!("Not implemented!");
     }
 }
