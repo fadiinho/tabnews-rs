@@ -1,21 +1,24 @@
 use crate::models::user::User;
 
+use std::cell::RefCell;
+use std::rc::Rc;
+
 use super::http_client::HttpClient;
 
 pub struct UserApi {
-    tabnews_client: HttpClient,
+    tabnews_client: Rc<RefCell<HttpClient>>,
 }
 
 impl Default for UserApi {
     fn default() -> Self {
-        let tabnews_client = HttpClient::default();
+        let tabnews_client = Rc::new(RefCell::new(HttpClient::default()));
 
         UserApi::new(tabnews_client)
     }
 }
 
 impl UserApi {
-    pub fn new(client: HttpClient) -> Self {
+    pub fn new(client: Rc<RefCell<HttpClient>>) -> Self {
         UserApi {
             tabnews_client: client,
         }
@@ -47,11 +50,12 @@ impl UserApi {
     /// ```
     // TODO: write tests
     pub async fn get_current_user(&self) -> Result<User, &str> {
-        if self.tabnews_client.get_header("Cookie").is_err() {
+        let _client = self.tabnews_client.borrow();
+        if _client.get_header("Cookie").is_err() {
             return Err("`Cookie` header doesn't exists. In order to use `get_current_user()`, `cookie` with `session_id=<token>` value is required");
         }
 
-        let response = self.tabnews_client.get("/user".to_owned()).await.unwrap();
+        let response = _client.get("/user".to_owned()).await.unwrap();
 
         let json_response: User = response.json().await.unwrap();
 

@@ -4,7 +4,9 @@ extern crate serde;
 pub mod internal;
 pub mod models;
 
+use std::cell::RefCell;
 use std::collections::HashMap;
+use std::rc::Rc;
 
 use internal::analytics::AnalyticsApi;
 use internal::http_client::HttpClient;
@@ -21,28 +23,32 @@ pub struct TabnewsClient {
 
 impl Default for TabnewsClient {
     fn default() -> Self {
-        let client = HttpClient::default();
+        let client = Rc::new(RefCell::new(HttpClient::default()));
 
         TabnewsClient {
-            posts_api: PostsApi::new(client.clone()),
-            analytics_api: AnalyticsApi::new(client.clone()),
-            user_api: UserApi::new(client.clone()),
-            users_api: UsersApi::new(client.clone()),
+            posts_api: PostsApi::new(Rc::clone(&client)),
+            analytics_api: AnalyticsApi::new(Rc::clone(&client)),
+            user_api: UserApi::new(Rc::clone(&client)),
+            users_api: UsersApi::new(Rc::clone(&client)),
         }
     }
 }
 
 impl TabnewsClient {
     pub fn new(headers: HashMap<String, String>) -> Self {
-        let mut client = HttpClient::default();
+        let client = Rc::new(RefCell::new(HttpClient::default()));
 
-        client.add_multiple_headers(headers.clone());
+        {
+            let mut _client = client.borrow_mut();
+
+            _client.add_multiple_headers(headers);
+        }
 
         TabnewsClient {
-            posts_api: PostsApi::new(client.clone()),
-            analytics_api: AnalyticsApi::new(client.clone()),
-            user_api: UserApi::new(client.clone()),
-            users_api: UsersApi::new(client.clone()),
+            posts_api: PostsApi::new(Rc::clone(&client)),
+            analytics_api: AnalyticsApi::new(Rc::clone(&client)),
+            user_api: UserApi::new(Rc::clone(&client)),
+            users_api: UsersApi::new(Rc::clone(&client)),
         }
     }
 }

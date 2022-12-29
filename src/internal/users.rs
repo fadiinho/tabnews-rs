@@ -1,25 +1,28 @@
 use crate::models::user::EditProfilePayload;
+
 use std::collections::HashMap;
+
+use std::cell::RefCell;
+use std::rc::Rc;
 
 use crate::models::{error::TabnewsError, user::User};
 
 use super::http_client::HttpClient;
 
 pub struct UsersApi {
-    tabnews_client: HttpClient,
+    tabnews_client: Rc<RefCell<HttpClient>>,
 }
 
 impl Default for UsersApi {
     fn default() -> Self {
-        let tabnews_client = HttpClient::
-            default();
+        let tabnews_client = Rc::new(RefCell::new(HttpClient::default()));
 
         UsersApi::new(tabnews_client)
     }
 }
 
 impl UsersApi {
-    pub fn new(client: HttpClient) -> Self {
+    pub fn new(client: Rc<RefCell<HttpClient>>) -> Self {
         UsersApi {
             tabnews_client: client,
         }
@@ -36,11 +39,9 @@ impl UsersApi {
         body.insert("email".to_owned(), email);
         body.insert("password".to_owned(), password);
 
-        let response = self
-            .tabnews_client
-            .post("/users".to_owned(), body)
-            .await
-            .unwrap();
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.post("/users".to_owned(), body).await.unwrap();
 
         let json_response: User = response.json().await.unwrap();
 
@@ -57,7 +58,9 @@ impl UsersApi {
     ) -> reqwest::Response {
         let url = format!("users/{}", current_username);
 
-        let response = self.tabnews_client.patch(url, payload).await.unwrap();
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.patch(url, payload).await.unwrap();
 
         // let json_response = response.json().await.unwrap();
 

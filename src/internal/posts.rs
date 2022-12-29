@@ -1,5 +1,8 @@
 use reqwest::Response;
 
+use std::cell::RefCell;
+use std::rc::Rc;
+
 use super::http_client::HttpClient;
 
 use crate::models::content::Content;
@@ -7,19 +10,19 @@ use crate::models::content::ContentParams;
 use crate::models::error::TabnewsError;
 
 pub struct PostsApi {
-    tabnews_client: HttpClient,
+    tabnews_client: Rc<RefCell<HttpClient>>,
 }
 
 impl Default for PostsApi {
     fn default() -> Self {
-        let tabnews_client = HttpClient::default();
+        let tabnews_client = Rc::new(RefCell::new(HttpClient::default()));
 
         PostsApi::new(tabnews_client)
     }
 }
 
 impl PostsApi {
-    pub fn new(client: HttpClient) -> Self {
+    pub fn new(client: Rc<RefCell<HttpClient>>) -> Self {
         PostsApi {
             tabnews_client: client,
         }
@@ -82,8 +85,9 @@ impl PostsApi {
     ) -> Result<Vec<Content>, TabnewsError> {
         let _params = self.build_params(params);
 
-        let response = self
-            .tabnews_client
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client
             .get_with_params("/contents".to_owned(), Some(&_params))
             .await
             .unwrap();
@@ -142,11 +146,9 @@ impl PostsApi {
 
         let uri = format!("/contents/{}", username);
 
-        let response = self
-            .tabnews_client
-            .get_with_params(uri, Some(&_params))
-            .await
-            .unwrap();
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.get_with_params(uri, Some(&_params)).await.unwrap();
 
         let json_response: Vec<Content> = response.json().await.unwrap();
 
@@ -179,13 +181,12 @@ impl PostsApi {
         slug: &str,
     ) -> Result<Content, TabnewsError> {
         let _params = ContentParams::default();
+
         let uri = format!("/contents/{}/{}", username, slug);
 
-        let response = self
-            .tabnews_client
-            .get_with_params(uri, Some(&_params))
-            .await
-            .unwrap();
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.get_with_params(uri, Some(&_params)).await.unwrap();
 
         let json_response = response.json().await.unwrap();
 
@@ -219,11 +220,9 @@ impl PostsApi {
         let _params = ContentParams::default();
         let uri = format!("/contents/{}/{}/children", username, slug);
 
-        let response = self
-            .tabnews_client
-            .get_with_params(uri, Some(&_params))
-            .await
-            .unwrap();
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.get_with_params(uri, Some(&_params)).await.unwrap();
 
         let json_response = response.json().await.unwrap();
 
@@ -259,11 +258,9 @@ impl PostsApi {
         let _params = ContentParams::default();
         let uri = format!("/contents/{}/{}/thumbnail", username, slug);
 
-        let response = self
-            .tabnews_client
-            .get_with_params(uri, Some(&_params))
-            .await
-            .unwrap();
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.get_with_params(uri, Some(&_params)).await.unwrap();
 
         Ok(response)
     }

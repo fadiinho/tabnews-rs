@@ -1,21 +1,24 @@
 use crate::models::analytics::{CommentsPublishedStatus, PostsPublishedStatus, UsersCreatedStatus};
 
+use std::cell::RefCell;
+use std::rc::Rc;
+
 use super::http_client::HttpClient;
 
 pub struct AnalyticsApi {
-    http_client: HttpClient,
+    http_client: Rc<RefCell<HttpClient>>,
 }
 
 impl Default for AnalyticsApi {
     fn default() -> Self {
-        let http_client = HttpClient::default();
+        let http_client = Rc::new(RefCell::new(HttpClient::default()));
 
         AnalyticsApi::new(http_client)
     }
 }
 
 impl AnalyticsApi {
-    pub fn new(client: HttpClient) -> Self {
+    pub fn new(client: Rc<RefCell<HttpClient>>) -> Self {
         AnalyticsApi {
             http_client: client,
         }
@@ -39,8 +42,9 @@ impl AnalyticsApi {
     /// }
     /// ```
     pub async fn get_users_created(&self) -> Vec<UsersCreatedStatus> {
-        let response = self
-            .http_client
+        let _client = self.http_client.borrow();
+
+        let response = _client
             .get("/analytics/users-created".to_owned())
             .await
             .unwrap();
@@ -68,8 +72,9 @@ impl AnalyticsApi {
     /// }
     /// ```
     pub async fn get_posts_published(&self) -> Vec<PostsPublishedStatus> {
-        let response = self
-            .http_client
+        let _client = self.http_client.borrow();
+
+        let response = _client
             .get("/analytics/root-content-published".to_owned())
             .await
             .unwrap();
@@ -97,8 +102,9 @@ impl AnalyticsApi {
     /// }
     /// ```
     pub async fn get_comments_published(&self) -> Vec<CommentsPublishedStatus> {
-        let response = self
-            .http_client
+        let _client = self.http_client.borrow();
+
+        let response = _client
             .get("/analytics/child-content-published".to_owned())
             .await
             .unwrap();
