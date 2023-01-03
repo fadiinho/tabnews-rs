@@ -3,6 +3,7 @@ extern crate serde;
 
 pub mod internal;
 pub mod models;
+pub mod utils;
 
 use std::cell::RefCell;
 use std::collections::HashMap;
@@ -13,12 +14,14 @@ use internal::http_client::HttpClient;
 use internal::posts::PostsApi;
 use internal::user::UserApi;
 use internal::users::UsersApi;
+use utils::get_preview_url;
 
 pub struct TabnewsClient {
     pub posts_api: PostsApi,
     pub analytics_api: AnalyticsApi,
     pub user_api: UserApi,
     pub users_api: UsersApi,
+    pub http_client: Rc<RefCell<HttpClient>>,
 }
 
 impl Default for TabnewsClient {
@@ -26,6 +29,7 @@ impl Default for TabnewsClient {
         let client = Rc::new(RefCell::new(HttpClient::default()));
 
         TabnewsClient {
+            http_client: Rc::clone(&client),
             posts_api: PostsApi::new(Rc::clone(&client)),
             analytics_api: AnalyticsApi::new(Rc::clone(&client)),
             user_api: UserApi::new(Rc::clone(&client)),
@@ -45,10 +49,23 @@ impl TabnewsClient {
         }
 
         TabnewsClient {
+            http_client: Rc::clone(&client),
             posts_api: PostsApi::new(Rc::clone(&client)),
             analytics_api: AnalyticsApi::new(Rc::clone(&client)),
             user_api: UserApi::new(Rc::clone(&client)),
             users_api: UsersApi::new(Rc::clone(&client)),
         }
+    }
+
+    pub async fn use_preview_url(self) -> Self {
+        let preview_url = get_preview_url().await;
+
+        {
+            let mut client = self.http_client.borrow_mut();
+
+            client.set_host(format!("{}/api/v1", preview_url));
+        }
+
+        self
     }
 }

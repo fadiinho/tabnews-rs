@@ -7,30 +7,26 @@ use reqwest::{
 use serde::Serialize;
 
 use crate::models::error::TabnewsError;
-pub const BASE_URL: &'static str = "https://www.tabnews.com.br/api/v1";
 
 #[derive(Clone)]
 pub struct HttpClient {
-    host: &'static str,
+    pub host: String,
     client: Client,
     headers: HeaderMap,
 }
 
 impl Default for HttpClient {
     fn default() -> Self {
-        HttpClient::new(Some(BASE_URL))
+        const BASE_URL: &'static str = "https://www.tabnews.com.br/api/v1";
+
+        HttpClient::new(BASE_URL.to_owned())
     }
 }
 
 impl HttpClient {
     /// Creates a new [`TabnewsApi`].
     /// `host` can be passed as argument to change the default host
-    pub fn new(host: Option<&'static str>) -> Self {
-        let _host = match host {
-            Some(h) => h,
-            None => BASE_URL,
-        };
-
+    pub fn new(host: String) -> Self {
         let client = Client::new();
 
         let mut headers = HeaderMap::new();
@@ -41,7 +37,7 @@ impl HttpClient {
         );
 
         Self {
-            host: _host,
+            host,
             client,
             headers,
         }
@@ -146,7 +142,7 @@ impl HttpClient {
         }
     }
 
-    pub fn get_header(&self, header_key: &str) -> Result<&str, reqwest::header::ToStrError> {
-        self.headers.get(header_key).unwrap().to_str()
+    pub fn set_host(&mut self, host: String) {
+        self.host = host;
     }
 }
