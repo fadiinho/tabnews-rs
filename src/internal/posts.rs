@@ -300,8 +300,35 @@ impl PostsApi {
         Ok(json_response)
     }
 
-    pub async fn get_post_root() {
-        todo!("Not implemented!");
+    /// Get the root of a specific post/comment
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use tabnews::internal::posts::PostsApi;
+    /// use tabnews::models::content::Content;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let posts_api = PostsApi::default();
+    ///     let post: Content = posts_api.get_post_root(
+    ///         "<username>",
+    ///         "<children/comment slug>"
+    ///     ).await.unwrap();
+    ///
+    ///     println!("{:?}", post)
+    /// }
+    /// ```
+    pub async fn get_post_root(&self, username: &str, slug: &str) -> Result<Content, TabnewsError> {
+        let uri = format!("/contents/{}/{}/root", username, slug);
+
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.get(uri).await.unwrap();
+
+        let json_response = response.json().await.unwrap();
+
+        Ok(json_response)
     }
 
     pub async fn get_post_tabcoins() {

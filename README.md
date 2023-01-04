@@ -17,7 +17,7 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
   - [ ] RSS
   - [ ] Publicar posts/comentários
   - [x] Obter post raiz
-  - [ ] Obter post pai
+  - [x] Obter post pai
 - [x] Rotas `/user`
 - [ ] Rotas `/users`
   - [x] Editar perfil
