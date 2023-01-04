@@ -17,6 +17,7 @@ pub struct Content {
     pub tabcoins: u64,
     pub owner_username: String,
     pub children_deep_count: u64,
+    pub children: Option<Box<Vec<Content>>>,
 }
 
 #[derive(Serialize)]
