@@ -66,4 +66,50 @@ impl UsersApi {
 
         response
     }
+
+    /// List all users
+    /// It can only be used by users that have permissions "read:user:list"
+    /// ```no_run
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::user::User;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
+    /// let users: Vec<User>  = client.users_api.list_all_users().await?;
+    ///     # Ok(())
+    /// # }
+    /// ```
+    pub async fn list_all_users(&self) -> Result<Vec<User>, TabnewsError> {
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.get("/users".to_owned()).await.unwrap();
+
+        let json_response = response.json().await.unwrap();
+
+        Ok(json_response)
+    }
+
+    /// Get user info
+    /// ```
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::user::User;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
+    /// let user: User  = client.users_api.get_user("fadiinho").await?;
+    ///     # Ok(())
+    /// # }
+    /// ```
+    pub async fn get_user(&self, username: &str) -> Result<User, TabnewsError> {
+        let uri = format!("/users/{}", username);
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.get(uri).await.unwrap();
+
+        let json_response = response.json().await.unwrap();
+
+        Ok(json_response)
+    }
 }

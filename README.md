@@ -19,12 +19,13 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
   - [x] Obter post raiz
   - [x] Obter post pai
 - [x] Rotas `/user`
-- [ ] Rotas `/users`
+- [x] Rotas `/users`
   - [x] Editar perfil
   - [x] Criar perfil
-  - [ ] Listar informações de um usuário `/users/{username}`
-  - [ ] Listar todos os usuários
+  - [x] Listar informações de um usuário `/users/{username}`
+  - [x] Listar todos os usuários
 - [x] Rotas `/analytics`
+- [ ] Usar a url de homologação nos testes
 
 ## Agradecimentos
 
