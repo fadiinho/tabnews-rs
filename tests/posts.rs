@@ -99,4 +99,28 @@ mod posts_tests {
             Err(_) => Err("Something went wrong!".to_owned()),
         }
     }
+
+    #[tokio::test]
+    async fn get_post_root() {
+        let posts_api = PostsApi::default();
+
+        let response = posts_api
+            .get_post_root("GabrielSozinho", "ae53bb7c-264f-4ad1-aeb0-340dde9b1647")
+            .await
+            .unwrap();
+
+        assert!(!response.id.is_empty())
+    }
+
+    #[tokio::test]
+    async fn get_post_parent() {
+        let posts_api = PostsApi::default();
+
+        let response = posts_api
+            .get_post_parent("GabrielSozinho", "ae53bb7c-264f-4ad1-aeb0-340dde9b1647")
+            .await
+            .unwrap();
+
+        assert!(!response.id.is_empty())
+    }
 }
