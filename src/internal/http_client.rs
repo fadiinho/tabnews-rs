@@ -104,6 +104,14 @@ impl HttpClient {
 
         let response = request.send().await.unwrap();
 
+        match response.status() {
+            StatusCode::OK => {}
+            _ => {
+                let json_response: TabnewsError = response.json().await.unwrap();
+                return Err(json_response);
+            }
+        }
+
         Ok(response)
     }
 
@@ -122,6 +130,14 @@ impl HttpClient {
             .headers(self.headers.to_owned());
 
         let response = request.send().await.unwrap();
+
+        match response.status() {
+            StatusCode::OK => {}
+            _ => {
+                let json_response: TabnewsError = response.json().await.unwrap();
+                return Err(json_response);
+            }
+        }
 
         Ok(response)
     }
