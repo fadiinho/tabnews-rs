@@ -1,5 +1,15 @@
 use serde::{Deserialize, Serialize};
 
+pub enum TabcoinsTransaction {
+    Credit,
+    Debit,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Tabcoins {
+    pub tabcoins: i64,
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Content {
     pub id: String,

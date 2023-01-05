@@ -1,12 +1,15 @@
 use reqwest::Response;
 
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::rc::Rc;
 
 use super::http_client::HttpClient;
 
 use crate::models::content::Content;
 use crate::models::content::ContentParams;
+use crate::models::content::Tabcoins;
+use crate::models::content::TabcoinsTransaction;
 use crate::models::error::TabnewsError;
 
 pub struct PostsApi {
@@ -330,20 +333,111 @@ impl PostsApi {
 
         Ok(json_response)
     }
+    /// Get the tabcoins of a post
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use tabnews::internal::posts::PostsApi;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let posts_api = PostsApi::default();
+    ///
+    ///     let tabcoins: i64 = posts_api.get_post_tabcoins(
+    ///         "GabrielSozinho",
+    ///         "documentacao-da-api-do-tabnews"
+    ///     ).await.unwrap();
+    ///
+    ///     println!("{:?}", tabcoins)
+    /// }
+    /// ```
+    pub async fn get_post_tabcoins(&self, username: &str, slug: &str) -> Result<i64, TabnewsError> {
+        let response = self.get_post_details(username, slug).await.unwrap();
 
-    pub async fn get_post_tabcoins() {
-        todo!("Not implemented!");
+        dbg!(&response);
+        Ok(response.tabcoins)
     }
 
-    async fn _tab_coin_operation() {
-        todo!("Not implemented!");
+    async fn _tabcoins_operation(
+        &self,
+        username: &str,
+        slug: &str,
+        transaction_type: TabcoinsTransaction,
+    ) -> Result<Tabcoins, TabnewsError> {
+        let uri = format!("/contents/{}/{}/tabcoins", username, slug);
+
+        let _client = self.tabnews_client.borrow();
+
+        let mut body: HashMap<&str, &str> = HashMap::new();
+
+        body.insert(
+            "transaction_type",
+            match transaction_type {
+                TabcoinsTransaction::Credit => "credit",
+                TabcoinsTransaction::Debit => "debit",
+            },
+        );
+
+        let response = _client.post(uri, body).await.unwrap();
+
+        let json_response = response.json().await.unwrap();
+
+        Ok(json_response)
     }
 
-    pub async fn downvote() {
-        todo!("Not implemented!");
+    // TODO: link to login docs
+    /// Downvote a post.
+    /// It will cost tabcoins of your account.
+    ///
+    /// # Panics
+    /// It will panic if the cookie header isn't set.
+    ///
+    /// # Examples
+    /// ```
+    /// # use tabnews::models::contents::Tabcoins;
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main () -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
+    /// let tabcoins: Tabcoins = client.posts_api.downvote(
+    ///     "<username>",
+    ///     "<post/comment slug>",
+    /// ).await?;
+    /// #     Ok(())
+    /// # }
+    /// ```
+    pub async fn downvote(&self, username: &str, slug: &str) -> Result<Tabcoins, TabnewsError> {
+        self._tabcoins_operation(username, slug, TabcoinsTransaction::Debit)
+            .await
     }
 
-    pub async fn upvote() {
-        todo!("Not implemented!");
+    /// Upvote a post.
+    /// It will cost tabcoins of your account.
+    ///
+    /// # Panics
+    /// It will panic if the cookie header isn't set.
+    ///
+    /// # Examples
+    /// ```
+    /// # use tabnews::models::contents::Tabcoins;
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main () -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
+    /// let tabcoins: Tabcoins = client.posts_api.upvote(
+    ///     "<username>",
+    ///     "<post/comment slug>",
+    /// ).await?;
+    ///
+    /// assert!(tabcoins)
+    /// #     Ok(())
+    /// # }
+    /// ```
+    pub async fn upvote(&self, username: &str, slug: &str) -> Result<Tabcoins, TabnewsError> {
+        self._tabcoins_operation(username, slug, TabcoinsTransaction::Credit)
+            .await
     }
 }

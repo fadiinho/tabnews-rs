@@ -13,7 +13,8 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
     - [x] De um determinado usuário
   - [x] Listar comentários
   - [x] Thumbnail de um post
-  - [ ] Obter Tabcoins de um post
+  - [x] Obter Tabcoins de um post
+  - [x] Downvote/upvote em um post
   - [ ] RSS
   - [ ] Publicar posts/comentários
   - [x] Obter post raiz
@@ -29,7 +30,7 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
 
 ## Agradecimentos
 
-[tabnews_rs](https://github.com/fadiinho/tabnews-rs) foi inspirado pelas seguintes libs:
+[tabnews-rs](https://github.com/fadiinho/tabnews-rs) foi inspirado pelas seguintes libs:
 
 [Gustavosta](https://github.com/Gustavosta) - Criador da lib [TabNews.py](https://github.com/Gustavosta/TabNews.py)
 
