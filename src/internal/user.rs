@@ -26,6 +26,10 @@ impl UserApi {
 
     /// Get current user information
     ///
+    /// # Panics
+    ///
+    /// If the `Cookie` header is not set (not logged in), this code will panic.
+    ///
     /// # Examples
     ///
     /// ```no_run
@@ -37,8 +41,7 @@ impl UserApi {
     /// async fn main() {
     ///     let mut headers = HashMap::new();
     ///
-    ///     // session_id is required
-    ///     headers.insert("cookie".to_owned(),
+    ///     headers.insert("Cookie".to_owned(),
     ///                    "session_id=<session_id>".to_owned());
     ///
     ///     let client = TabnewsClient::new(headers);
@@ -52,7 +55,7 @@ impl UserApi {
     pub async fn get_current_user(&self) -> Result<User, &str> {
         let _client = self.tabnews_client.borrow();
         if _client.get_header("Cookie").is_err() {
-            return Err("`Cookie` header doesn't exists. In order to use `get_current_user()`, `cookie` with `session_id=<token>` value is required");
+            return Err("`Cookie` header doesn't exists. In order to use `get_current_user()`, `Cookie` with `session_id=<token>` value is required");
         }
 
         let response = _client.get("/user".to_owned()).await.unwrap();
