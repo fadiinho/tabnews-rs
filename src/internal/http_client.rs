@@ -1,4 +1,7 @@
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    io::{Error, ErrorKind},
+};
 
 use reqwest::{
     header::{HeaderMap, HeaderName, HeaderValue, IntoHeaderName, CONTENT_TYPE},
@@ -144,6 +147,19 @@ impl HttpClient {
                 HeaderValue::try_from(v).unwrap(),
             );
         }
+    }
+
+    pub fn get_header(&self, header_key: &str) -> Result<&str, Error> {
+        let header_value = self.headers.get(header_key);
+
+        if header_value.is_some() {
+            return Ok(header_value.unwrap().to_str().unwrap());
+        }
+
+        Err(Error::new(
+            ErrorKind::InvalidInput,
+            format!("Error: header {} doesn't exists", header_key),
+        ))
     }
 
     pub fn set_host(&mut self, host: String) {
