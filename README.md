@@ -29,7 +29,7 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
 
 ## Agradecimentos
 
-[tabnews_rs](https://github.com/fadiinho/tabnews_rs) foi inspirado pelas seguintes libs:
+[tabnews_rs](https://github.com/fadiinho/tabnews-rs) foi inspirado pelas seguintes libs:
 
 [Gustavosta](https://github.com/Gustavosta) - Criador da lib [TabNews.py](https://github.com/Gustavosta/TabNews.py)
 
@@ -37,4 +37,4 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
 
 ## Licença
 
-Projeto sob a licença [GPL-3](https://github.com/fadiinho/tabnews_rs/tree/main/LICENSE)
+Projeto sob a licença [GPL-3](https://github.com/fadiinho/tabnews-rs/tree/main/LICENSE)
