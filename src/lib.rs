@@ -72,4 +72,10 @@ impl TabnewsClient {
 
         self
     }
+
+    pub fn is_logged(&self) -> bool {
+        let _client = self.http_client.borrow();
+
+        _client.get_header("Cookie").is_ok()
+    }
 }
