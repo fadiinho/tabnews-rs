@@ -7,8 +7,8 @@ pub struct User {
     pub email: Option<String>,
     pub features: Vec<String>,
     pub notifications: Option<bool>,
-    pub tabcoins: u64,
-    pub tabcash: u64,
+    pub tabcoins: i64,
+    pub tabcash: i64,
     // TODO: Use `chrono` crate to serialize/deserialize Date format
     pub created_at: String,
     pub updated_at: String,

@@ -14,7 +14,7 @@ pub struct Content {
     pub updated_at: String,
     pub published_at: String,
     pub deleted_at: Option<String>,
-    pub tabcoins: u64,
+    pub tabcoins: i64,
     pub owner_username: String,
     pub children_deep_count: u64,
     pub children: Option<Box<Vec<Content>>>,
