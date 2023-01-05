@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use reqwest::{
     header::{HeaderMap, HeaderName, HeaderValue, IntoHeaderName, CONTENT_TYPE},
-    Client, StatusCode,
+    Client,
 };
 use serde::Serialize;
 
