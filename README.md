@@ -15,7 +15,7 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
   - [x] Thumbnail de um post
   - [x] Obter Tabcoins de um post
   - [x] Downvote/upvote em um post
-  - [ ] RSS
+  - [x] RSS
   - [ ] Publicar posts/comentários
   - [x] Obter post raiz
   - [x] Obter post pai

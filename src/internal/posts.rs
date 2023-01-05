@@ -440,4 +440,27 @@ impl PostsApi {
         self._tabcoins_operation(username, slug, TabcoinsTransaction::Credit)
             .await
     }
+
+    /// Get TabNews RSS
+    ///
+    /// # Examples
+    /// ```
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main () -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
+    /// let rss: String = client.posts_api.get_rss().await?;
+    ///
+    /// assert!(!rss.is_empty());
+    /// #     Ok(())
+    /// # }
+    /// ```
+    pub async fn get_rss(&self) -> Result<String, TabnewsError> {
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.get("/contents/rss".to_owned()).await.unwrap();
+
+        Ok(response.text().await.unwrap())
+    }
 }

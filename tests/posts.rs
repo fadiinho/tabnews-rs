@@ -123,4 +123,13 @@ mod posts_tests {
 
         assert!(!response.id.is_empty())
     }
+
+    #[tokio::test]
+    async fn get_posts_rss() {
+        let posts_api = PostsApi::default();
+
+        let response = posts_api.get_rss().await.unwrap();
+
+        assert!(!response.is_empty())
+    }
 }
