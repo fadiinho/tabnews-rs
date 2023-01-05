@@ -58,12 +58,9 @@ impl HttpClient {
 
         let response = request.send().await.unwrap();
 
-        match response.status() {
-            StatusCode::OK => {}
-            _ => {
-                let json_response: TabnewsError = response.json().await.unwrap();
-                return Err(json_response);
-            }
+        if !response.status().is_success() {
+            let json_response: TabnewsError = response.json().await.unwrap();
+            return Err(json_response);
         }
 
         Ok(response)
@@ -79,12 +76,9 @@ impl HttpClient {
 
         let response = request.send().await.unwrap();
 
-        match response.status() {
-            StatusCode::OK => {}
-            _ => {
-                let json_response: TabnewsError = response.json().await.unwrap();
-                return Err(json_response);
-            }
+        if !response.status().is_success() {
+            let json_response: TabnewsError = response.json().await.unwrap();
+            return Err(json_response);
         }
 
         Ok(response)
@@ -104,12 +98,9 @@ impl HttpClient {
 
         let response = request.send().await.unwrap();
 
-        match response.status() {
-            StatusCode::OK => {}
-            _ => {
-                let json_response: TabnewsError = response.json().await.unwrap();
-                return Err(json_response);
-            }
+        if !response.status().is_success() {
+            let json_response: TabnewsError = response.json().await.unwrap();
+            return Err(json_response);
         }
 
         Ok(response)
@@ -131,12 +122,9 @@ impl HttpClient {
 
         let response = request.send().await.unwrap();
 
-        match response.status() {
-            StatusCode::OK => {}
-            _ => {
-                let json_response: TabnewsError = response.json().await.unwrap();
-                return Err(json_response);
-            }
+        if !response.status().is_success() {
+            let json_response: TabnewsError = response.json().await.unwrap();
+            return Err(json_response);
         }
 
         Ok(response)
