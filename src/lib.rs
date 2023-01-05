@@ -10,6 +10,7 @@ use std::collections::HashMap;
 use std::rc::Rc;
 
 use internal::analytics::AnalyticsApi;
+use internal::auth::AuthApi;
 use internal::http_client::HttpClient;
 use internal::posts::PostsApi;
 use internal::user::UserApi;
@@ -21,6 +22,7 @@ pub struct TabnewsClient {
     pub analytics_api: AnalyticsApi,
     pub user_api: UserApi,
     pub users_api: UsersApi,
+    pub auth_api: AuthApi,
     pub http_client: Rc<RefCell<HttpClient>>,
 }
 
@@ -34,6 +36,7 @@ impl Default for TabnewsClient {
             analytics_api: AnalyticsApi::new(Rc::clone(&client)),
             user_api: UserApi::new(Rc::clone(&client)),
             users_api: UsersApi::new(Rc::clone(&client)),
+            auth_api: AuthApi::new(Rc::clone(&client)),
         }
     }
 }
@@ -54,6 +57,7 @@ impl TabnewsClient {
             analytics_api: AnalyticsApi::new(Rc::clone(&client)),
             user_api: UserApi::new(Rc::clone(&client)),
             users_api: UsersApi::new(Rc::clone(&client)),
+            auth_api: AuthApi::new(Rc::clone(&client)),
         }
     }
 
