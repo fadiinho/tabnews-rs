@@ -356,7 +356,7 @@ impl PostsApi {
         let response = self.get_post_details(username, slug).await.unwrap();
 
         dbg!(&response);
-        Ok(response.tabcoins)
+        Ok(response.tabcoins.unwrap())
     }
 
     async fn _tabcoins_operation(
@@ -394,8 +394,8 @@ impl PostsApi {
     /// It will panic if the cookie header isn't set.
     ///
     /// # Examples
-    /// ```
-    /// # use tabnews::models::contents::Tabcoins;
+    /// ```no_run
+    /// # use tabnews::models::content::Tabcoins;
     /// # use tabnews::TabnewsClient;
     /// # use tabnews::models::error::TabnewsError;
     /// # #[tokio::main]
@@ -420,8 +420,8 @@ impl PostsApi {
     /// It will panic if the cookie header isn't set.
     ///
     /// # Examples
-    /// ```
-    /// # use tabnews::models::contents::Tabcoins;
+    /// ```no_run
+    /// # use tabnews::models::content::Tabcoins;
     /// # use tabnews::TabnewsClient;
     /// # use tabnews::models::error::TabnewsError;
     /// # #[tokio::main]
@@ -431,8 +431,6 @@ impl PostsApi {
     ///     "<username>",
     ///     "<post/comment slug>",
     /// ).await?;
-    ///
-    /// assert!(tabcoins)
     /// #     Ok(())
     /// # }
     /// ```
@@ -462,5 +460,53 @@ impl PostsApi {
         let response = _client.get("/contents/rss".to_owned()).await.unwrap();
 
         Ok(response.text().await.unwrap())
+    }
+
+    /// Publish a content
+    async fn _publish(&self, content: Content) -> Result<Content, TabnewsError> {
+        let _client = self.tabnews_client.borrow();
+
+        let response = _client.post("/contents".to_owned(), content).await.unwrap();
+
+        let json_response = response.json().await.unwrap();
+
+        Ok(json_response)
+    }
+
+    /// Publish a post and returns it
+    ///
+    /// # Examples
+    /// ```no_run
+    /// # use tabnews::models::content::Content;
+    /// # use tabnews::TabnewsClient;
+    /// # #[tokio::main]
+    /// # async fn main() {
+    /// let client = TabnewsClient::default();
+    /// let mut post = Content::default();
+    ///
+    /// post.set_title("Cool Title");
+    /// post.set_body("Cool text/markdown");
+    /// post.set_source_url("https://optional-source-url.com");
+    /// post.set_slug("optional-slug");
+    ///
+    /// let response = client.posts_api.publish_post(post).await;
+    ///
+    /// assert!(response.id.is_some());
+    /// # }
+    /// ```
+    pub async fn publish_post(&self, content: Content) -> Content {
+        let response = self._publish(content).await.unwrap();
+
+        response
+    }
+
+    pub async fn publish_comment(&self, content: Content) -> Result<Content, &str> {
+        if content.parent_id.is_none() {
+            return Err("To post a comment `parent_id` must be set!");
+        }
+
+        let response = self._publish(content).await.unwrap();
+
+        Ok(response)
     }
 }

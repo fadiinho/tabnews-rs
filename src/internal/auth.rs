@@ -17,8 +17,8 @@ impl AuthApi {
         }
     }
 
-    pub async fn get_user_session(&self, email: &str, password: &str) -> UserSession {
-        let mut data: HashMap<&str, &str> = HashMap::new();
+    pub async fn get_user_session(&self, email: String, password: String) -> UserSession {
+        let mut data: HashMap<&str, String> = HashMap::new();
 
         data.insert("email", email);
         data.insert("password", password);
@@ -32,7 +32,7 @@ impl AuthApi {
         json_response
     }
 
-    pub async fn login(&self, email: &str, password: &str) -> UserSession {
+    pub async fn login(&self, email: String, password: String) -> UserSession {
         let session = self.get_user_session(email, password).await;
 
         {

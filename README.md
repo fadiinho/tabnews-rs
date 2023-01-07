@@ -16,7 +16,7 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
   - [x] Obter Tabcoins de um post
   - [x] Downvote/upvote em um post
   - [x] RSS
-  - [ ] Publicar posts/comentários
+  - [x] Publicar posts/comentários
   - [x] Obter post raiz
   - [x] Obter post pai
 - [x] Rotas `/user`
@@ -27,6 +27,7 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
   - [x] Listar todos os usuários
 - [x] Rotas `/analytics`
 - [ ] Usar a url de homologação nos testes
+- [ ] Reescrever as docs de cada função para usar o formato com `TabnewsClient`
 
 ## Agradecimentos
 
