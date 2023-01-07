@@ -7,7 +7,7 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
 
 ## TODO:
 
-- [ ] Rotas `/contents`.
+- [x] Rotas `/contents`.
   - [x] Listar posts
     - [x] Da página inicial
     - [x] De um determinado usuário
