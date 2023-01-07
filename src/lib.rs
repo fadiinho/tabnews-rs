@@ -78,4 +78,9 @@ impl TabnewsClient {
 
         _client.get_header("Cookie").is_ok()
     }
+
+    pub fn debug_dump_host(&self) {
+        let _client = self.http_client.borrow();
+        dbg!(&_client.host);
+    }
 }
