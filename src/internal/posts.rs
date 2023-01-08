@@ -49,38 +49,42 @@ impl PostsApi {
     /// Example without parameters:
     ///
     /// ```
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::Content;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
+    /// let homepage_posts: Vec<Content> = client.posts_api
+    ///     .get_homepage_posts(None).await?;
     ///
-    ///     let homepage_posts: Vec<Content> = posts_api.get_homepage_posts(None).await.unwrap();
-    ///
-    ///     println!("{:?}", homepage_posts)
-    /// }
+    /// assert!(homepage_posts.len() >= 0);
+    /// Ok(())
+    /// # }
     /// ```
     /// Example with parameters:
     ///
     /// ```
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
+    /// let parameters = ContentParams {
+    ///     page: Some(1),
+    ///     per_page: Some(10),
+    ///     strategy: Some("old".to_owned())
+    /// };
     ///
-    ///     let parameters = ContentParams {
-    ///         page: Some(1),
-    ///         per_page: Some(10),
-    ///         strategy: Some("old".to_owned())
-    ///     };
+    /// let homepage_posts: Vec<Content> = client.posts_api
+    ///     .get_homepage_posts(Some(parameters)).await?;
     ///
-    ///     let homepage_posts: Vec<Content> = posts_api.get_homepage_posts(Some(parameters)).await.unwrap();
-    ///
-    ///     println!("{:?}", homepage_posts)
-    /// }
+    /// assert!(homepage_posts.len() >= 0);
+    /// # Ok(())
+    /// # }
     /// ```
     pub async fn get_homepage_posts(
         &self,
@@ -106,39 +110,42 @@ impl PostsApi {
     ///
     /// Example without parameters:
     /// ```
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::Content;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
+    /// let fadiinho_posts: Vec<Content> = client.posts_api
+    ///     .get_posts_by_user("fadiinho", None).await?;
     ///
-    ///     let fadiinho_posts: Vec<Content> = posts_api.get_posts_by_user("fadiinho", None).await.unwrap();
-    ///
-    ///     println!("{:?}", fadiinho_posts)
-    /// }
+    /// assert!(fadiinho_posts.len() >= 0);
+    /// # Ok(())
+    /// # }
     /// ```
     /// Example with parameters:
     ///
     /// ```
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
+    /// let parameters = ContentParams {
+    ///     page: Some(1),
+    ///     per_page: Some(10),
+    ///     strategy: Some("old".to_owned())
+    /// };
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
+    /// let fadiinho_posts: Vec<Content> = client.posts_api
+    ///     .get_posts_by_user("fadiinho", Some(parameters)).await?;
     ///
-    ///     let parameters = ContentParams {
-    ///         page: Some(1),
-    ///         per_page: Some(10),
-    ///         strategy: Some("old".to_owned())
-    ///     };
-    ///
-    ///     let fadiinho_posts: Vec<Content> = posts_api.get_posts_by_user("fadiinho", Some(parameters)).await.unwrap();
-    ///
-    ///     println!("{:?}", fadiinho_posts)
-    /// }
+    /// assert!(fadiinho_posts.len() >= 0);
+    /// # Ok(())
+    /// # }
     /// ```
     pub async fn get_posts_by_user(
         &self,
@@ -163,20 +170,20 @@ impl PostsApi {
     /// # Examples
     ///
     /// ```
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::Content;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
-    ///
-    ///     let post: Content = posts_api.get_post_details(
-    ///         "GabrielSozinho",
-    ///         "documentacao-da-api-do-tabnews"
-    ///     ).await.unwrap();
-    ///
-    ///     println!("{:?}", post)
-    /// }
+    /// let post: Content = client.posts_api.get_post_details(
+    ///     "GabrielSozinho",
+    ///     "documentacao-da-api-do-tabnews"
+    /// ).await?;
+    /// assert!(post.id.is_some());
+    /// Ok(())
+    /// # }
     /// ```
     pub async fn get_post_details(
         &self,
@@ -201,19 +208,20 @@ impl PostsApi {
     /// # Examples
     ///
     /// ```
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
-    ///     let post: Vec<Content> = posts_api.get_post_comments(
-    ///         "GabrielSozinho",
-    ///         "documentacao-da-api-do-tabnews"
-    ///     ).await.unwrap();
-    ///
-    ///     println!("{:?}", post)
-    /// }
+    /// let post: Vec<Content> = client.posts_api.get_post_comments(
+    ///     "GabrielSozinho",
+    ///     "documentacao-da-api-do-tabnews"
+    /// ).await?;
+    /// assert!(post.len() >= 0);
+    /// # Ok(())
+    /// # }
     /// ```
     pub async fn get_post_comments(
         &self,
@@ -238,20 +246,20 @@ impl PostsApi {
     /// # Examples
     ///
     /// ```
-    /// use reqwest::Response;
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::{Content, ContentParams};
+    /// # use reqwest::Response;
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::{Content, ContentParams};
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
-    ///     let response: Response = posts_api.get_post_thumbnail(
-    ///         "GabrielSozinho",
-    ///         "documentacao-da-api-do-tabnews"
-    ///     ).await.unwrap();
-    ///
-    ///     println!("{:?}", response)
-    /// }
+    /// let response: Response = client.posts_api.get_post_thumbnail(
+    ///     "GabrielSozinho",
+    ///     "documentacao-da-api-do-tabnews"
+    /// ).await?;
+    /// # Ok(())
+    /// # }
     /// ```
     pub async fn get_post_thumbnail(
         &self,
@@ -273,19 +281,21 @@ impl PostsApi {
     /// # Examples
     ///
     /// ```no_run
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::Content;
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::Content;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
-    ///     let post: Content = posts_api.get_post_parent(
-    ///         "<username>",
-    ///         "<children/comment slug>"
-    ///     ).await.unwrap();
+    /// let post: Content = client.posts_api.get_post_parent(
+    ///     "<username>",
+    ///     "<children/comment slug>"
+    /// ).await?;
     ///
-    ///     println!("{:?}", post)
-    /// }
+    /// assert!(!post.id.is_some());
+    /// # Ok(())
+    /// # }
     /// ```
     pub async fn get_post_parent(
         &self,
@@ -308,19 +318,21 @@ impl PostsApi {
     /// # Examples
     ///
     /// ```no_run
-    /// use tabnews::internal::posts::PostsApi;
-    /// use tabnews::models::content::Content;
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::content::Content;
+    /// # use tabnews::models::error::TabnewsError;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
-    ///     let post: Content = posts_api.get_post_root(
-    ///         "<username>",
-    ///         "<children/comment slug>"
-    ///     ).await.unwrap();
+    /// let post: Content = client.posts_api.get_post_root(
+    ///     "<username>",
+    ///     "<children/comment slug>"
+    /// ).await?;
     ///
-    ///     println!("{:?}", post)
-    /// }
+    /// assert!(post.id.is_some());
+    /// Ok(())
+    /// # }
     /// ```
     pub async fn get_post_root(&self, username: &str, slug: &str) -> Result<Content, TabnewsError> {
         let uri = format!("/contents/{}/{}/root", username, slug);
@@ -338,19 +350,24 @@ impl PostsApi {
     /// # Examples
     ///
     /// ```
-    /// use tabnews::internal::posts::PostsApi;
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::error::TabnewsError;
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let posts_api = PostsApi::default();
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    ///     let tabcoins: i64 = posts_api.get_post_tabcoins(
-    ///         "GabrielSozinho",
-    ///         "documentacao-da-api-do-tabnews"
-    ///     ).await.unwrap();
+    /// let tabcoins: i64 = client.posts_api.get_post_tabcoins(
+    ///     "GabrielSozinho",
+    ///     "documentacao-da-api-do-tabnews"
+    /// ).await?;
     ///
-    ///     println!("{:?}", tabcoins)
-    /// }
+    /// assert!(
+    ///     tabcoins < i64::MAX &&
+    ///     tabcoins > i64::MIN
+    /// );
+    /// # Ok(())
+    /// # }
     /// ```
     pub async fn get_post_tabcoins(&self, username: &str, slug: &str) -> Result<i64, TabnewsError> {
         let response = self.get_post_details(username, slug).await.unwrap();
@@ -401,6 +418,7 @@ impl PostsApi {
     /// # #[tokio::main]
     /// # async fn main () -> Result<(), TabnewsError> {
     /// let client = TabnewsClient::default();
+    ///
     /// let tabcoins: Tabcoins = client.posts_api.downvote(
     ///     "<username>",
     ///     "<post/comment slug>",
@@ -427,6 +445,7 @@ impl PostsApi {
     /// # #[tokio::main]
     /// # async fn main () -> Result<(), TabnewsError> {
     /// let client = TabnewsClient::default();
+    ///
     /// let tabcoins: Tabcoins = client.posts_api.upvote(
     ///     "<username>",
     ///     "<post/comment slug>",
@@ -448,6 +467,7 @@ impl PostsApi {
     /// # #[tokio::main]
     /// # async fn main () -> Result<(), TabnewsError> {
     /// let client = TabnewsClient::default();
+    ///
     /// let rss: String = client.posts_api.get_rss().await?;
     ///
     /// assert!(!rss.is_empty());
