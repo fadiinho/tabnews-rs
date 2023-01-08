@@ -28,7 +28,9 @@ impl UsersApi {
         }
     }
 
-    pub async fn create_user(
+    // Not tested yet!
+    #[allow(dead_code)]
+    async fn create_user(
         &self,
         username: String,
         email: String,
@@ -48,7 +50,9 @@ impl UsersApi {
         Ok(json_response)
     }
 
-    pub async fn edit_profile(
+    // Not tested yet!
+    #[allow(dead_code)]
+    async fn edit_profile(
         &self,
         // TODO: We can only edit the profile of the current authenticated user
         // so maybe we can get the username from a "cached" info, then
@@ -69,6 +73,8 @@ impl UsersApi {
 
     /// List all users
     /// It can only be used by users that have permissions "read:user:list"
+    ///
+    /// # Examples
     /// ```no_run
     /// # use tabnews::TabnewsClient;
     /// # use tabnews::models::user::User;
@@ -77,7 +83,9 @@ impl UsersApi {
     /// # async fn main() -> Result<(), TabnewsError> {
     /// let client = TabnewsClient::default();
     /// let users: Vec<User>  = client.users_api.list_all_users().await?;
-    ///     # Ok(())
+    ///
+    /// assert!(users.len() >= 0);
+    /// # Ok(())
     /// # }
     /// ```
     pub async fn list_all_users(&self) -> Result<Vec<User>, TabnewsError> {
@@ -91,6 +99,8 @@ impl UsersApi {
     }
 
     /// Get user info
+    ///
+    /// # Examples
     /// ```
     /// # use tabnews::TabnewsClient;
     /// # use tabnews::models::user::User;
@@ -99,7 +109,9 @@ impl UsersApi {
     /// # async fn main() -> Result<(), TabnewsError> {
     /// let client = TabnewsClient::default();
     /// let user: User  = client.users_api.get_user("fadiinho").await?;
-    ///     # Ok(())
+    ///
+    /// assert!(!user.id.is_empty());
+    /// # Ok(())
     /// # }
     /// ```
     pub async fn get_user(&self, username: &str) -> Result<User, TabnewsError> {
