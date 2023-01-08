@@ -26,8 +26,9 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
   - [x] Listar informações de um usuário `/users/{username}`
   - [x] Listar todos os usuários
 - [x] Rotas `/analytics`
+- [x] Reescrever as docs de cada função para usar o formato com `TabnewsClient`
 - [ ] Usar a url de homologação nos testes
-- [ ] Reescrever as docs de cada função para usar o formato com `TabnewsClient`
+- [ ] Escrever exemplos
 
 ## Agradecimentos
 
