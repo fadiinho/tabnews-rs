@@ -39,4 +39,4 @@ Um wrapper pra API do [Tabnews](https://www.tabnews.com.br)
 
 ## Licença
 
-Projeto sob a licença [GPL-3](https://github.com/fadiinho/tabnews-rs/tree/main/LICENSE)
+Projeto sob a licença [MIT](https://github.com/fadiinho/tabnews-rs/tree/main/LICENSE)
