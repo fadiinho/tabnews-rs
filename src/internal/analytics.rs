@@ -28,18 +28,18 @@ impl AnalyticsApi {
     ///
     /// # Examples
     ///
-    /// ```
-    /// use tabnews::internal::analytics::AnalyticsApi;
-    /// use tabnews::models::analytics::UsersCreatedStatus;
+    /// ```no_run
+    /// # use tabnews::models::analytics::UsersCreatedStatus;
+    /// # use tabnews::TabnewsClient;
+    /// # #[tokio::main]
+    /// # async fn main() {
+    /// let client = TabnewsClient::default();
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let analytics_api = AnalyticsApi::default();
-    ///     let response: Vec<UsersCreatedStatus> = analytics_api
-    ///         .get_users_created().await;
+    /// let users_status: Vec<UsersCreatedStatus> = client.analytics_api
+    ///     .get_users_created().await;
     ///
-    ///     println!("{:?}", response)
-    /// }
+    /// assert!(!users_status.is_empty());
+    /// # }
     /// ```
     pub async fn get_users_created(&self) -> Vec<UsersCreatedStatus> {
         let _client = self.http_client.borrow();
@@ -58,18 +58,17 @@ impl AnalyticsApi {
     ///
     /// # Examples
     ///
-    /// ```
-    /// use tabnews::internal::analytics::AnalyticsApi;
-    /// use tabnews::models::analytics::PostsPublishedStatus;
+    /// ```no_run
+    /// # use tabnews::models::analytics::PostsPublishedStatus;
+    /// # use tabnews::TabnewsClient;
+    /// # #[tokio::main]
+    /// # async fn main() {
+    /// let client = TabnewsClient::default();
+    /// let posts_status: Vec<PostsPublishedStatus> = client.analytics_api
+    ///     .get_posts_published().await;
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let analytics_api = AnalyticsApi::default();
-    ///     let response: Vec<PostsPublishedStatus> = analytics_api
-    ///         .get_posts_published().await;
-    ///
-    ///     println!("{:?}", response)
-    /// }
+    /// assert!(!posts_status.is_empty());
+    /// # }
     /// ```
     pub async fn get_posts_published(&self) -> Vec<PostsPublishedStatus> {
         let _client = self.http_client.borrow();
@@ -88,18 +87,17 @@ impl AnalyticsApi {
     ///
     /// # Examples
     ///
-    /// ```
-    /// use tabnews::internal::analytics::AnalyticsApi;
-    /// use tabnews::models::analytics::CommentsPublishedStatus;
+    /// ```no_run
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::analytics::CommentsPublishedStatus;
+    /// # #[tokio::main]
+    /// # async fn main() {
+    /// let client = TabnewsClient::default();
+    /// let comments_status: Vec<CommentsPublishedStatus> = client.analytics_api
+    ///     .get_comments_published().await;
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let analytics_api = AnalyticsApi::default();
-    ///     let response: Vec<CommentsPublishedStatus> = analytics_api
-    ///         .get_comments_published().await;
-    ///
-    ///     println!("{:?}", response)
-    /// }
+    /// assert!(!comments_status.is_empty());
+    /// # }
     /// ```
     pub async fn get_comments_published(&self) -> Vec<CommentsPublishedStatus> {
         let _client = self.http_client.borrow();
