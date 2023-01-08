@@ -33,25 +33,18 @@ impl UserApi {
     /// # Examples
     ///
     /// ```no_run
-    /// use std::collections::HashMap;
+    /// # use std::collections::HashMap;
+    /// # use tabnews::TabnewsClient;
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), TabnewsError> {
+    /// let client = TabnewsClient::default();
     ///
-    /// use tabnews::TabnewsClient;
+    /// let user: User = client.get_current_user().await?;
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let mut headers = HashMap::new();
-    ///
-    ///     headers.insert("Cookie".to_owned(),
-    ///                    "session_id=<session_id>".to_owned());
-    ///
-    ///     let client = TabnewsClient::new(headers);
-    ///
-    ///     let response = client.user_api.get_current_user().await.unwrap();
-    ///
-    ///     println!("{:?}", response);
-    /// }
+    /// assert!(!user.id.is_empty());
+    /// # Ok(())
+    /// # }
     /// ```
-    // TODO: write tests
     pub async fn get_current_user(&self) -> Result<User, &str> {
         let _client = self.tabnews_client.borrow();
         if _client.get_header("Cookie").is_err() {
