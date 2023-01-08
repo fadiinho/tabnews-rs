@@ -17,6 +17,26 @@ impl AuthApi {
         }
     }
 
+    /// Create a session with the provided `email` and `password`
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::user::UserSession;
+    /// # #[tokio::main]
+    /// # async fn main() {
+    /// let client = TabnewsClient::default();
+    /// let user_session: UserSession = client.auth_api
+    ///     .get_user_session(
+    ///         "<email>".to_owned(),
+    ///         "<password>".to_owned(),
+    ///     ).await;
+    ///
+    /// assert!(!user_session.token.is_empty());
+    /// # }
+    ///
+    /// ```
     pub async fn get_user_session(&self, email: String, password: String) -> UserSession {
         let mut data: HashMap<&str, String> = HashMap::new();
 
@@ -32,6 +52,28 @@ impl AuthApi {
         json_response
     }
 
+    /// Create a session with the provided `email` and `password`,
+    /// and automatically sets `session_id`
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::user::UserSession;
+    /// # #[tokio::main]
+    /// # async fn main() {
+    /// let client = TabnewsClient::default();
+    /// let user_session: UserSession = client.auth_api
+    ///     .login(
+    ///         "<email>".to_owned(),
+    ///         "<password>".to_owned(),
+    ///     ).await;
+    ///
+    ///
+    /// assert!(client.is_logged());
+    /// # }
+    ///
+    /// ```
     pub async fn login(&self, email: String, password: String) -> UserSession {
         let session = self.get_user_session(email, password).await;
 
