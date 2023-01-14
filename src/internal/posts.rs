@@ -520,6 +520,31 @@ impl PostsApi {
         response
     }
 
+    /// Publish a comment and returns it
+    ///
+    /// # Panics
+    ///
+    /// It will panic if `parent_id` was not set
+    ///
+    /// # Examples
+    /// ```no_run
+    /// # use tabnews::models::content::Content;
+    /// # use tabnews::TabnewsClient;
+    /// # #[tokio::main]
+    /// # async fn main()  {
+    /// let client = TabnewsClient::default();
+    /// let mut comment = Content::default();
+    ///
+    /// comment.set_title("Cool Title");
+    /// comment.set_body("Cool text/markdown");
+    /// comment.set_slug("optional-slug");
+    /// comment.set_parent_id("<parent-id>");
+    ///
+    /// let response = client.posts_api.publish_comment(comment).await.unwrap();
+    ///
+    /// assert!(response.id.is_some());
+    /// # }
+    /// ```
     pub async fn publish_comment(&self, content: Content) -> Result<Content, &str> {
         if content.parent_id.is_none() {
             return Err("To post a comment `parent_id` must be set!");
