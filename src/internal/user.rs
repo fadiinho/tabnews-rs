@@ -35,11 +35,13 @@ impl UserApi {
     /// ```no_run
     /// # use std::collections::HashMap;
     /// # use tabnews::TabnewsClient;
+    /// # use tabnews::models::user::User;
+    /// # use tabnews::models::error::TabnewsError;
     /// # #[tokio::main]
     /// # async fn main() -> Result<(), TabnewsError> {
     /// let client = TabnewsClient::default();
     ///
-    /// let user: User = client.get_current_user().await?;
+    /// let user: User = client.user_api.get_current_user().await.unwrap();
     ///
     /// assert!(!user.id.is_empty());
     /// # Ok(())
