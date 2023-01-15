@@ -59,7 +59,7 @@ mod posts_tests {
             .await
             .unwrap();
 
-        assert_eq!(response.slug, slug.to_owned())
+        assert_eq!(response.slug.unwrap(), slug)
     }
 
     #[tokio::test]
@@ -70,7 +70,7 @@ mod posts_tests {
 
         let response = posts_api.get_post_details("feijao", slug).await.unwrap();
 
-        assert_eq!(response.slug, slug.to_owned())
+        assert_eq!(response.slug.unwrap(), slug)
     }
 
     #[tokio::test]
@@ -109,7 +109,7 @@ mod posts_tests {
             .await
             .unwrap();
 
-        assert!(!response.id.is_empty())
+        assert!(response.id.is_some())
     }
 
     #[tokio::test]
@@ -121,7 +121,7 @@ mod posts_tests {
             .await
             .unwrap();
 
-        assert!(!response.id.is_empty())
+        assert!(response.id.is_some())
     }
 
     #[tokio::test]
